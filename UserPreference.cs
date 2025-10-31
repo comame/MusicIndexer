@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace MusicManager;
 internal class UserPreference {
     public static string LibraryPath {
-        get { 
+        get {
             return StringGetter("LibraryPath", Environment.GetFolderPath(Environment.SpecialFolder.MyMusic));
         }
 
@@ -16,8 +16,24 @@ internal class UserPreference {
         }
     }
 
+    public static (int, int)? WindowPosition {
+        get {
+            object x = Windows.Storage.ApplicationData.Current.LocalSettings.Values["WindowPositionX"];
+            object y = Windows.Storage.ApplicationData.Current.LocalSettings.Values["WindowPositionY"];
+
+            if (x == null || y == null) {
+                return null;
+            }
+            return ((int)x, (int)y);
+        }
+        set {
+            Windows.Storage.ApplicationData.Current.LocalSettings.Values["WindowPositionX"] = value!.Value.Item1;
+            Windows.Storage.ApplicationData.Current.LocalSettings.Values["WindowPositionY"] = value!.Value.Item2;
+        }
+    }
+
     public static void ClearAll() {
-               Windows.Storage.ApplicationData.Current.LocalSettings.Values.Clear();
+        Windows.Storage.ApplicationData.Current.LocalSettings.Values.Clear();
     }
 
     private static string StringGetter(string key, string defaultValue) {

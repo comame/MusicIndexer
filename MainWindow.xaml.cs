@@ -1,18 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -27,7 +14,19 @@ namespace MusicManager {
 
             ExtendsContentIntoTitleBar = true;
 
-            AppWindow.ResizeClient(new Windows.Graphics.SizeInt32(1000, 600));
+            AppWindow.ResizeClient(new Windows.Graphics.SizeInt32(800, 600));
+            var pos = UserPreference.WindowPosition;
+            if (pos != null) {
+                AppWindow.Move(new Windows.Graphics.PointInt32(pos.Value.Item1, pos.Value.Item2));
+            }
+
+            AppWindow.Changed += (sender, args) => {
+                if (args.DidPositionChange) {
+                    var p = AppWindow.Position;
+                    UserPreference.WindowPosition = (p.X, p.Y);
+                }
+            };
+
             contentFrame.Navigate(typeof(ITLPage));
         }
 

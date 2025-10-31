@@ -32,6 +32,7 @@
             ItemInvoked="NavigationView_ItemInvoked"
             IsBackButtonVisible="Collapsed"
             IsPaneToggleButtonVisible="False"
+            PaneDisplayMode="LeftCompact"
             Grid.Row="1"
         >
             <NavigationView.MenuItems>
