@@ -30,7 +30,7 @@ namespace MusicManager.Logic {
         public string Kind = "";
         public string Location = "";
 
-        public static ITLTrack FromMusicMetadata(MusicMetadata m, int trackID) {
+        public static ITLTrack FromMusicMetadata(MusicTrack m, int trackID) {
             var track = new ITLTrack() {
                 TrackID = trackID,
                 Size = m.SizeBytes,

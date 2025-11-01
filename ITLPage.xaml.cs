@@ -21,7 +21,7 @@ public sealed partial class ITLPage : Page {
     protected override async void OnNavigatedTo(NavigationEventArgs e) {
         base.OnNavigatedFrom(e);
 
-        var musicCount = await Task.Run(() => Music.CountMusicFiles(UserPreference.LibraryPath));
+        var musicCount = await Task.Run(() => MusicIndexer.CountMusicFiles(UserPreference.LibraryPath));
         targetFileCountText.Text = $"{musicCount} 件の音楽ファイル";
 
         ITLPageService.page = this;
@@ -118,7 +118,7 @@ internal class ITLPageService {
         _cancelTokenSource = new();
         GetViewModel().Status = TaskStatus.Running;
 
-        var completed = await Task.Run(() => Music.SearchMusicFilesAndExportITLFile(
+        var completed = await Task.Run(() => MusicIndexer.SearchMusicFilesAndExportITLFile(
             _cancelTokenSource.Token,
             UserPreference.LibraryPath,
             UserPreference.LibraryPath,
