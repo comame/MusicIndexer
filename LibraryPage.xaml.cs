@@ -11,8 +11,8 @@ using System.Threading.Tasks;
 
 namespace MusicManager;
 
-public sealed partial class ITLPage : Page {
-    public ITLPage() {
+public sealed partial class LibraryPage : Page {
+    public LibraryPage() {
         InitializeComponent();
     }
 
@@ -143,7 +143,7 @@ internal class ITLPageService {
         GetViewModel().Progress = 0;
     }
 
-    public static ITLPage? page;
+    public static LibraryPage? page;
     private static ITLPageViewModel GetViewModel() {
         return page?.ViewModel ?? new ITLPageViewModel();
     }

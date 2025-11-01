@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Page
-    x:Class="MusicManager.ITLPage"
+    x:Class="MusicManager.LibraryPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MusicManager"
@@ -10,7 +10,7 @@
 
     <StackPanel>
         <TextBlock
-            Text="エクスポート"
+            Text="ライブラリ"
             Style="{ThemeResource SubtitleTextBlockStyle}"
             Foreground="{ThemeResource TextFillColorPrimaryBrush}"
             Margin="0,0,0,16"

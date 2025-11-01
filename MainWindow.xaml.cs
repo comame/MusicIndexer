@@ -27,7 +27,7 @@ namespace MusicManager {
                 }
             };
 
-            contentFrame.Navigate(typeof(ITLPage));
+            contentFrame.Navigate(typeof(LibraryPage));
         }
 
         private void NavigationView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args) {
@@ -37,8 +37,8 @@ namespace MusicManager {
             }
 
             switch (args.InvokedItemContainer?.Tag as string) {
-                case "ITL":
-                    contentFrame.Navigate(typeof(ITLPage));
+                case "Library":
+                    contentFrame.Navigate(typeof(LibraryPage));
                     break;
                 case "Sync":
                     contentFrame.Navigate(typeof(SyncPage));

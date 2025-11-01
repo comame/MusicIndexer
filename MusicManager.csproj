@@ -14,7 +14,6 @@
 	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="ITLPage.xaml" />
     <None Remove="SettingsPage.xaml" />
     <None Remove="SyncPage.xaml" />
   </ItemGroup>
@@ -56,7 +55,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="ITLPage.xaml">
+    <Page Update="LibraryPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

@@ -36,7 +36,7 @@
             Grid.Row="1"
         >
             <NavigationView.MenuItems>
-                <NavigationViewItem Icon="Share" Content="エクスポート" Tag="ITL" IsSelected="True" />
+                <NavigationViewItem Icon="Library" Content="ライブラリ" Tag="Library" IsSelected="True" />
                 <NavigationViewItem Icon="Sync" Content="同期" Tag="Sync" />
             </NavigationView.MenuItems>
 
