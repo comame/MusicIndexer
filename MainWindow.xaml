@@ -40,7 +40,19 @@
                 <NavigationViewItem Icon="Sync" Content="同期" Tag="Sync" />
             </NavigationView.MenuItems>
 
-            <Frame x:Name="contentFrame" Padding="16,32,16,16" />
+            <ScrollViewer
+                HorizontalScrollBarVisibility="Auto"
+                VerticalScrollBarVisibility="Auto"
+            >
+                <Frame
+                    x:Name="contentFrame"
+                    Padding="16,32,16,16"
+                    Grid.Column="1"
+                    MaxWidth="800"
+                    MinWidth="300"
+                    HorizontalAlignment="Stretch"
+                />
+            </ScrollViewer>
         </NavigationView>
     </Grid>
 </Window>

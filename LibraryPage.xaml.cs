@@ -18,8 +18,6 @@ internal sealed partial class LibraryPage : Page {
 
     public IndexViewModel IndexViewModel { get; } = new IndexViewModel();
 
-    private MusicLibrary? library = null;
-
     protected override void OnNavigatedTo(NavigationEventArgs e) {
         base.OnNavigatedFrom(e);
 
