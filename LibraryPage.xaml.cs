@@ -16,7 +16,7 @@ public sealed partial class LibraryPage : Page {
         InitializeComponent();
     }
 
-    public ITLPageViewModel ViewModel { get; } = new ITLPageViewModel();
+    public ExportITLViewModel ExportITLViewModel { get; } = new ExportITLViewModel();
 
     protected override async void OnNavigatedTo(NavigationEventArgs e) {
         base.OnNavigatedFrom(e);
@@ -24,17 +24,17 @@ public sealed partial class LibraryPage : Page {
         var musicCount = await Task.Run(() => MusicIndexer.CountMusicFiles(UserPreference.LibraryPath));
         targetFileCountText.Text = $"{musicCount} 件の音楽ファイル";
 
-        ITLPageService.page = this;
+        ExportITLService.page = this;
     }
 
     protected override void OnNavigatedFrom(NavigationEventArgs e) {
         base.OnNavigatedFrom(e);
 
-        ITLPageService.page = null;
+        ExportITLService.page = null;
     }
 
     private void ExecuteButtonClick(object sender, RoutedEventArgs e) {
-        ITLPageService.ExecuteButtonClick();
+        ExportITLService.ExecuteButtonClick();
     }
 }
 
@@ -45,7 +45,7 @@ public enum TaskStatus {
     Canceled,
 }
 
-public class ITLPageViewModel : INotifyPropertyChanged {
+public class ExportITLViewModel : INotifyPropertyChanged {
     private static double _progress = 0.0;
     private static TaskStatus _status = TaskStatus.Default;
 
@@ -106,7 +106,7 @@ public class ITLPageViewModel : INotifyPropertyChanged {
     }
 }
 
-internal class ITLPageService {
+internal class ExportITLService {
     private static CancellationTokenSource? _cancelTokenSource = null;
 
     public static async void ExecuteButtonClick() {
@@ -144,7 +144,7 @@ internal class ITLPageService {
     }
 
     public static LibraryPage? page;
-    private static ITLPageViewModel GetViewModel() {
-        return page?.ViewModel ?? new ITLPageViewModel();
+    private static ExportITLViewModel GetViewModel() {
+        return page?.ExportITLViewModel ?? new ExportITLViewModel();
     }
 }

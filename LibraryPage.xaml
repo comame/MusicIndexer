@@ -45,16 +45,16 @@
                     </Grid.ColumnDefinitions>
                     <Button
                         x:Name="executeButton"
-                        Content="{x:Bind ViewModel.ExecuteButtonText, Mode=OneWay}"
+                        Content="{x:Bind ExportITLViewModel.ExecuteButtonText, Mode=OneWay}"
                         Click="ExecuteButtonClick"
                     ></Button>
                     <TextBlock
                         x:Name="doneNoticeText"
-                        Text="{x:Bind ViewModel.DoneNoticeText, Mode=OneWay}"
+                        Text="{x:Bind ExportITLViewModel.DoneNoticeText, Mode=OneWay}"
                         VerticalAlignment="Center"
                         Grid.Column="1"
                         Margin="8,0,0,0"
-                        Visibility="{x:Bind ViewModel.DoneNoticeTextVisibility, Mode=OneWay}"
+                        Visibility="{x:Bind ExportITLViewModel.DoneNoticeTextVisibility, Mode=OneWay}"
                         Style="{ThemeResource CaptionTextBlockStyle}"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                     />
@@ -62,8 +62,8 @@
                         x:Name="progressBar"
                         Margin="8,0,0,0"
                         Grid.Column="1"
-                        Value="{x:Bind ViewModel.Progress, Mode=OneWay}"
-                        Visibility="{x:Bind ViewModel.ProgressBarVisibility, Mode=OneWay}"
+                        Value="{x:Bind ExportITLViewModel.Progress, Mode=OneWay}"
+                        Visibility="{x:Bind ExportITLViewModel.ProgressBarVisibility, Mode=OneWay}"
                     />
                 </Grid>
             </StackPanel>
