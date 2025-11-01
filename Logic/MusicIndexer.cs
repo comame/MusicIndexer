@@ -7,27 +7,36 @@ using System.Threading;
 namespace MusicManager.Logic;
 
 class MusicIndexer {
+    public static MusicLibrary? LoadFromIndexFile() {
+        try {
+            using var f = new FileStream(UserPreference.LibraryPath + "\\music_index.json", FileMode.Open, FileAccess.Read);
+            var library = MusicLibrary.FromJSONReader(f);
+            return library;
+        } catch (FileNotFoundException) {
+            return null;
+        }
+    }
+
     public static int CountMusicFiles(string searchDirectory) {
         var files = FindMusicFiles(searchDirectory);
         return files.Count;
     }
 
-    public static bool SearchMusicFilesAndExportITLFile(
-        in CancellationToken ctx,
-        string searchDirectory,
-        string outDirectory,
-        Action<int, int, bool> onProgress
+    public static MusicLibrary? UpdateIndex(
+        Action<double> onProgress,
+        in CancellationToken ctx
     ) {
-        var files = FindMusicFiles(searchDirectory);
+        var files = FindMusicFiles(UserPreference.LibraryPath);
         if (files.Count == 0) {
-            return true;
+            return null;
         }
 
+        // インデックスし直すので、ライブラリは新規作成してよい
         var library = new MusicLibrary();
 
         for (var i = 0; i < files.Count; i++) {
             if (ctx.IsCancellationRequested) {
-                return false;
+                return null;
             }
 
             var file = files[i];
@@ -35,30 +44,33 @@ class MusicIndexer {
             library.Tracks.Add(meta);
 
             if (i % 30 == 0) {
-                onProgress(i, files.Count, false);
+                onProgress((double)i / files.Count * 100);
             }
         }
-
-        onProgress(0, 0, true);
 
         library.FillTrackCount();
         library.SortByImportedDate();
 
-        using (var f = new StreamWriter(outDirectory + "\\iTunes Music Library.xml", append: false)) {
-            ITLUtil.WriteLibraryXMLHeader(f);
-            for (var i = 0; i < library.Tracks.Count; i++) {
-                var t = ITLTrack.FromMusicMetadata(library.Tracks[i], i);
-                t.WriteTo(f);
-            }
-            ITLUtil.WriteLibraryXMLFooter(f, searchDirectory);
+        using var f = new FileStream(UserPreference.LibraryPath + "\\music_index.json", FileMode.Create, FileAccess.Write);
+        library.WriteJSON(f);
+        f.Flush();
 
-            f.Flush();
-        }
-
-        onProgress(files.Count, files.Count, false);
-
-        return true;
+        return library;
     }
+
+    public static void GenerateITLFile(in MusicLibrary library) {
+        using var f = new StreamWriter(UserPreference.LibraryPath + "\\iTunes Music Library.xml", append: false);
+
+        ITLUtil.WriteLibraryXMLHeader(f);
+        for (var i = 0; i < library.Tracks.Count; i++) {
+            var t = ITLTrack.FromMusicMetadata(library.Tracks[i], i);
+            t.WriteTo(f);
+        }
+        ITLUtil.WriteLibraryXMLFooter(f, UserPreference.LibraryPath);
+
+        f.Flush();
+    }
+
     private static List<string> FindMusicFiles(string directory) {
         var extensions = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { ".mp3", ".m4a" };
         var files = Directory.EnumerateFiles(directory, "*.*", SearchOption.AllDirectories)

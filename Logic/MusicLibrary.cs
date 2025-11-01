@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
 
 namespace MusicManager.Logic;
 
-internal class MusicLibrary {
+class MusicLibrary {
     private List<MusicTrack> tracks = [];
 
     public List<MusicTrack> Tracks {
@@ -45,5 +48,27 @@ internal class MusicLibrary {
 
     public void SortByImportedDate() {
         tracks.Sort((a, b) => a.Imported.CompareTo(b.Imported));
+    }
+
+    public void WriteJSON(Stream w) {
+        JsonSerializer.Serialize(w, tracks, new JsonSerializerOptions {
+            WriteIndented = true,
+        });
+    }
+
+    public static MusicLibrary? FromJSONReader(Stream r) {
+        try {
+            var l = JsonSerializer.Deserialize<List<MusicTrack>>(r);
+            if (l == null) {
+                return null;
+            }
+
+            var instance = new MusicLibrary();
+            instance.tracks = l;
+
+            return instance;
+        } catch (Exception) {
+            return null;
+        }
     }
 }

@@ -25,7 +25,7 @@
         >
             <StackPanel>
                 <TextBlock
-                    Text="iTunes Music Library.xml の出力"
+                    Text="ライブラリのインデックス"
                     Margin="0,0,0,8"
                     Style="{ThemeResource BodyTextBlockStyle}"
                     Foreground="{ThemeResource TextFillColorPrimaryBrush}"
@@ -36,7 +36,14 @@
                     VerticalAlignment="Center"
                     Style="{ThemeResource CaptionTextBlockStyle}"
                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                    Margin="0,0,0,16"
+                    Margin="0,0,0,4"
+                />
+                <TextBlock 
+                    VerticalAlignment="Center"
+                    Text="{x:Bind IndexViewModel.IndexedFileCountText, Mode=OneWay}"
+                    Style="{ThemeResource CaptionTextBlockStyle}"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Margin="0,0,0,8"
                 />
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -44,26 +51,64 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Button
-                        x:Name="executeButton"
-                        Content="{x:Bind ExportITLViewModel.ExecuteButtonText, Mode=OneWay}"
-                        Click="ExecuteButtonClick"
+                        x:Name="indexExecuteButton"
+                        Content="{x:Bind IndexViewModel.ExecuteButtonText, Mode=OneWay}"
+                        Click="IndexExecuteButton_Click"
                     ></Button>
                     <TextBlock
-                        x:Name="doneNoticeText"
-                        Text="{x:Bind ExportITLViewModel.DoneNoticeText, Mode=OneWay}"
+                        x:Name="indexDoneNoticeText"
+                        Text="{x:Bind IndexViewModel.DoneNoticeText, Mode=OneWay}"
                         VerticalAlignment="Center"
                         Grid.Column="1"
                         Margin="8,0,0,0"
-                        Visibility="{x:Bind ExportITLViewModel.DoneNoticeTextVisibility, Mode=OneWay}"
+                        Visibility="{x:Bind IndexViewModel.DoneNoticeTextVisibility, Mode=OneWay}"
                         Style="{ThemeResource CaptionTextBlockStyle}"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                     />
                     <ProgressBar
-                        x:Name="progressBar"
+                        x:Name="indexProgressBar"
                         Margin="8,0,0,0"
                         Grid.Column="1"
-                        Value="{x:Bind ExportITLViewModel.Progress, Mode=OneWay}"
-                        Visibility="{x:Bind ExportITLViewModel.ProgressBarVisibility, Mode=OneWay}"
+                        Value="{x:Bind IndexViewModel.Progress, Mode=OneWay}"
+                        Visibility="{x:Bind IndexViewModel.ProgressBarVisibility, Mode=OneWay}"
+                    />
+                </Grid>
+            </StackPanel>
+        </Border>
+        <Border 
+            CornerRadius="4"
+            BorderThickness="1"
+            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+            Padding="16"
+            Margin="0,0,0,8"
+        >
+            <StackPanel>
+                <TextBlock
+                    Text="iTunes Music Library.xml の出力"
+                    Margin="0,0,0,8"
+                    Style="{ThemeResource BodyTextBlockStyle}"
+                    Foreground="{ThemeResource TextFillColorPrimaryBrush}"
+                />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button
+                        x:Name="itlExecuteButton"
+                        Content="実行"
+                        Click="ITLExecuteButtonClick"
+                    ></Button>
+                    <TextBlock
+                        x:Name="itlDoneNoticeText"
+                        Text="完了"
+                        VerticalAlignment="Center"
+                        Grid.Column="1"
+                        Margin="8,0,0,0"
+                        Visibility="Collapsed"
+                        Style="{ThemeResource CaptionTextBlockStyle}"
+                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                     />
                 </Grid>
             </StackPanel>
